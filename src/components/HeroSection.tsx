@@ -1,5 +1,6 @@
 import { ArrowDown, Shield, Award, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import logoTw from "@/assets/logo-tw.jpg";
 
 interface HeroSectionProps {
@@ -7,21 +8,30 @@ interface HeroSectionProps {
 }
 
 export function HeroSection({ onScrollToForm }: HeroSectionProps) {
+  // Azul do escudo/logo
+  const TW_BLUE = "#0F376F";
+  const TW_BLUE_HOVER = "#0B2B4B";
+
   return (
     <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
-      {/* Background Image (public/limpeza.jpeg => /limpeza.jpeg) */}
+      {/* Theme Toggle (canto superior direito, reservado) */}
+      <div className="absolute top-4 right-4 z-20">
+        <ThemeToggle />
+      </div>
+
+      {/* Background Image (public/... => /...) */}
       <div
         className="absolute inset-0 bg-center bg-cover bg-no-repeat"
-        style={{ backgroundImage: `url("/limpeza.jpeg")` }}
+        style={{ backgroundImage: `url("/limpeza e segurança.png")` }}
       />
 
       {/* Overlay for readability */}
-      <div className="absolute inset-0 bg-black/30" />
+      <div className="absolute inset-0 bg-black/65" />
 
       {/* Optional: subtle gradient to improve contrast */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/55 to-black/65" />
 
-      {/* Floating Elements (kept subtle) */}
+      {/* Floating Elements */}
       <div className="absolute top-20 left-10 w-20 h-20 rounded-full bg-white/14 blur-2xl animate-pulse" />
       <div
         className="absolute bottom-32 right-16 w-32 h-32 rounded-full bg-white/10 blur-3xl animate-pulse"
@@ -44,7 +54,7 @@ export function HeroSection({ onScrollToForm }: HeroSectionProps) {
           style={{ animationDelay: "0.1s" }}
         >
           Soluções Profissionais em
-          <span className="block text-accent mt-2 drop-shadow">
+          <span className="block mt-2 drop-shadow" style={{ color: TW_BLUE }}>
             Terceirização de Serviços
           </span>
         </h1>
@@ -54,56 +64,79 @@ export function HeroSection({ onScrollToForm }: HeroSectionProps) {
           className="text-lg md:text-xl text-white/85 max-w-2xl mx-auto mb-8 animate-fade-in"
           style={{ animationDelay: "0.2s" }}
         >
-          Portaria, limpeza e serviços gerais com padrão profissional, aliados a soluções em tecnologia e segurança eletrônica. Atendimento sob medida para empresas, condomínios e residências.
+          Portaria, limpeza e serviços gerais com padrão profissional, aliados a
+          soluções em tecnologia e segurança eletrônica. Atendimento sob medida
+          para empresas, condomínios e residências.
         </p>
 
         {/* Trust Indicators */}
-    <div
-  className="flex flex-wrap justify-center gap-6 md:gap-10 mb-10 animate-fade-in"
-  style={{ animationDelay: "0.3s" }}
->
-  <div className="flex items-center gap-3 text-white/90">
-    <div className="w-11 h-11 rounded-full bg-white/10 backdrop-blur-md border border-white/25 shadow-[0_10px_25px_rgba(0,0,0,0.25)] flex items-center justify-center">
-      <Shield className="w-6 h-6 text-white" />
-    </div>
-    <span className="text-sm font-semibold tracking-wide">Conformidade Legal</span>
-  </div>
+        <div
+          className="flex flex-wrap justify-center gap-6 md:gap-10 mb-10 animate-fade-in"
+          style={{ animationDelay: "0.3s" }}
+        >
+          <div className="flex items-center gap-3 text-white/90">
+            <div
+              className="w-11 h-11 rounded-full backdrop-blur-md border border-white/25 shadow-[0_10px_25px_rgba(0,0,0,0.25)] flex items-center justify-center"
+              style={{ backgroundColor: `${TW_BLUE}CC` }}
+            >
+              <Shield className="w-6 h-6 text-white" />
+            </div>
+            <span className="text-sm font-semibold tracking-wide">
+              Conformidade Legal
+            </span>
+          </div>
 
-  <div className="flex items-center gap-3 text-white/90">
-    <div className="w-11 h-11 rounded-full bg-white/10 backdrop-blur-md border border-white/25 shadow-[0_10px_25px_rgba(0,0,0,0.25)] flex items-center justify-center">
-      <Award className="w-6 h-6 text-white" />
-    </div>
-    <span className="text-sm font-semibold tracking-wide">Equipe Qualificada</span>
-  </div>
+          <div className="flex items-center gap-3 text-white/90">
+            <div
+              className="w-11 h-11 rounded-full backdrop-blur-md border border-white/25 shadow-[0_10px_25px_rgba(0,0,0,0.25)] flex items-center justify-center"
+              style={{ backgroundColor: `${TW_BLUE}CC` }}
+            >
+              <Award className="w-6 h-6 text-white" />
+            </div>
+            <span className="text-sm font-semibold tracking-wide">
+              Equipe Qualificada
+            </span>
+          </div>
 
-  <div className="flex items-center gap-3 text-white/90">
-    <div className="w-11 h-11 rounded-full bg-white/10 backdrop-blur-md border border-white/25 shadow-[0_10px_25px_rgba(0,0,0,0.25)] flex items-center justify-center">
-      <Clock className="w-6 h-6 text-white" />
-    </div>
-    <span className="text-sm font-semibold tracking-wide">Atendimento 24h</span>
-  </div>
-</div>
-
-
+          <div className="flex items-center gap-3 text-white/90">
+            <div
+              className="w-11 h-11 rounded-full backdrop-blur-md border border-white/25 shadow-[0_10px_25px_rgba(0,0,0,0.25)] flex items-center justify-center"
+              style={{ backgroundColor: `${TW_BLUE}CC` }}
+            >
+              <Clock className="w-6 h-6 text-white" />
+            </div>
+            <span className="text-sm font-semibold tracking-wide">
+              Atendimento 24h
+            </span>
+          </div>
+        </div>
 
         {/* CTA Button */}
         <div className="animate-fade-in" style={{ animationDelay: "0.4s" }}>
           <Button
-  variant="hero"
-  size="lg"
-  onClick={onScrollToForm}
-  className="
-    text-lg px-8 py-6
-    !bg-[#1D4ED8] !text-white
-    hover:!bg-[#1E40AF]
-    border border-white/20
-    shadow-[0_12px_30px_rgba(29,78,216,0.35)]
-    hover:shadow-[0_16px_40px_rgba(29,78,216,0.45)]
-    transition-all duration-300 hover:-translate-y-1
-  "
->
-  Solicitar Orçamento Gratuito
-</Button>
+            variant="hero"
+            size="lg"
+            onClick={onScrollToForm}
+            className="
+              text-lg px-8 py-6
+              !text-white
+              border border-white/20
+              shadow-[0_12px_30px_rgba(15,55,111,0.35)]
+              hover:shadow-[0_16px_40px_rgba(15,55,111,0.45)]
+              transition-all duration-300 hover:-translate-y-1
+            "
+            style={{ backgroundColor: TW_BLUE }}
+            onMouseEnter={(e) => {
+              (e.currentTarget as HTMLButtonElement).style.backgroundColor =
+                TW_BLUE_HOVER;
+            }}
+            onMouseLeave={(e) => {
+              (e.currentTarget as HTMLButtonElement).style.backgroundColor =
+                TW_BLUE;
+            }}
+          >
+            Solicitar Orçamento Gratuito
+          </Button>
         </div>
 
         {/* Scroll Indicator */}

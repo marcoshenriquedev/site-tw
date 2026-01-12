@@ -34,6 +34,10 @@ interface FormData {
 }
 
 export const FormSection = forwardRef<HTMLElement>((props, ref) => {
+  // Azul do escudo/logo (mesmo usado no Hero/Footer)
+  const TW_BLUE = "#0F376F";
+  const TW_BLUE_HOVER = "#0B2B4B";
+
   const [formData, setFormData] = useState<FormData>({
     services: {
       portaria: false,
@@ -52,12 +56,8 @@ export const FormSection = forwardRef<HTMLElement>((props, ref) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  // ✅ Blindagem: Radix pode mandar boolean | "indeterminate"
-  const checkedToBool = (v: CheckedState) => v === true;
-
   // ✅ Padronizado: sempre converte para boolean antes de salvar no state
   type CheckedLike = boolean | "indeterminate" | undefined | null;
-
   const toBool = (v: CheckedLike) => v === true;
 
   const handleServiceChange =
@@ -207,9 +207,14 @@ export const FormSection = forwardRef<HTMLElement>((props, ref) => {
       <section ref={ref} className="py-20 px-4 bg-card">
         <div className="container mx-auto max-w-2xl">
           <div className="bg-background rounded-2xl shadow-card-hover p-8 md:p-12 text-center animate-scale-in">
-            <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-accent/10 flex items-center justify-center">
-              <CheckCircle2 className="w-10 h-10 text-accent" />
+            {/* ✅ mesmo tom do logo */}
+            <div
+              className="w-20 h-20 mx-auto mb-6 rounded-full flex items-center justify-center"
+              style={{ backgroundColor: `${TW_BLUE}14` }}
+            >
+              <CheckCircle2 className="w-10 h-10" style={{ color: TW_BLUE }} />
             </div>
+
             <h2 className="text-2xl font-bold text-foreground mb-3">
               Solicitação Enviada!
             </h2>
@@ -217,7 +222,20 @@ export const FormSection = forwardRef<HTMLElement>((props, ref) => {
               Recebemos seu pedido de orçamento. Nossa equipe entrará em contato
               em até 24 horas úteis.
             </p>
-            <Button variant="hero" onClick={resetForm}>
+
+            <Button
+              onClick={resetForm}
+              className="!text-white border border-black/0"
+              style={{ backgroundColor: TW_BLUE }}
+              onMouseEnter={(e) => {
+                (e.currentTarget as HTMLButtonElement).style.backgroundColor =
+                  TW_BLUE_HOVER;
+              }}
+              onMouseLeave={(e) => {
+                (e.currentTarget as HTMLButtonElement).style.backgroundColor =
+                  TW_BLUE;
+              }}
+            >
               Fazer Nova Solicitação
             </Button>
           </div>
@@ -230,12 +248,17 @@ export const FormSection = forwardRef<HTMLElement>((props, ref) => {
     <section ref={ref} id="form-section" className="py-20 px-4 bg-card">
       <div className="container mx-auto max-w-2xl">
         <div className="text-center mb-10">
-          <span className="inline-block px-4 py-1.5 rounded-full bg-accent/10 text-accent text-sm font-medium mb-4">
+          <span
+            className="inline-block px-4 py-1.5 rounded-full text-sm font-medium mb-4"
+            style={{ backgroundColor: `${TW_BLUE}14`, color: TW_BLUE }}
+          >
             Orçamento Gratuito
           </span>
+
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
             Solicite seu Orçamento
           </h2>
+
           <p className="text-muted-foreground text-lg">
             Preencha o formulário e receba uma proposta sob medida para a sua
             demanda.
@@ -254,7 +277,10 @@ export const FormSection = forwardRef<HTMLElement>((props, ref) => {
         >
           <fieldset className="space-y-4">
             <legend className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
-              <span className="w-1.5 h-6 rounded-full bg-accent"></span>
+              <span
+                className="w-1.5 h-6 rounded-full"
+                style={{ backgroundColor: TW_BLUE }}
+              ></span>
               Serviço(s) Desejado(s) <span className="text-destructive">*</span>
             </legend>
 
@@ -303,7 +329,10 @@ export const FormSection = forwardRef<HTMLElement>((props, ref) => {
 
           <fieldset className="space-y-5">
             <legend className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
-              <span className="w-1.5 h-6 rounded-full bg-accent"></span>
+              <span
+                className="w-1.5 h-6 rounded-full"
+                style={{ backgroundColor: TW_BLUE }}
+              ></span>
               Informações de Contato
             </legend>
 
@@ -336,10 +365,7 @@ export const FormSection = forwardRef<HTMLElement>((props, ref) => {
               </div>
 
               <div className="space-y-2">
-                <Label
-                  htmlFor="celular"
-                  className="text-foreground font-medium"
-                >
+                <Label htmlFor="celular" className="text-foreground font-medium">
                   Celular <span className="text-destructive">*</span>
                 </Label>
                 <Input
@@ -356,10 +382,7 @@ export const FormSection = forwardRef<HTMLElement>((props, ref) => {
             </div>
 
             <div className="space-y-2">
-              <Label
-                htmlFor="documento"
-                className="text-foreground font-medium"
-              >
+              <Label htmlFor="documento" className="text-foreground font-medium">
                 CPF ou CNPJ <span className="text-destructive">*</span>
               </Label>
               <Input
@@ -394,17 +417,27 @@ export const FormSection = forwardRef<HTMLElement>((props, ref) => {
               Campos marcados com <span className="text-destructive">*</span>{" "}
               são obrigatórios
             </p>
+
+            {/* ✅ Botão no mesmo tom do logo */}
             <Button
               type="submit"
               size="lg"
               disabled={isSubmitting}
               className="
-    !bg-[#0B2B4B] !text-white
-    hover:!bg-[#0A243F]
-    disabled:!bg-[#0B2B4B]/70 disabled:!text-white/90
-    disabled:!opacity-100
-    shadow-md hover:shadow-lg transition
-  "
+                !text-white
+                border border-black/0
+                shadow-md hover:shadow-lg transition
+                disabled:!opacity-100
+              "
+              style={{ backgroundColor: TW_BLUE }}
+              onMouseEnter={(e) => {
+                (e.currentTarget as HTMLButtonElement).style.backgroundColor =
+                  TW_BLUE_HOVER;
+              }}
+              onMouseLeave={(e) => {
+                (e.currentTarget as HTMLButtonElement).style.backgroundColor =
+                  TW_BLUE;
+              }}
             >
               {isSubmitting ? "Enviando..." : "Enviar Solicitação"}
             </Button>
