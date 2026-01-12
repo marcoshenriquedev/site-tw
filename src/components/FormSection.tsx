@@ -1,5 +1,14 @@
-import { useState, forwardRef } from "react";
-import { Shield, Sparkles, Wrench, MoreHorizontal, CheckCircle2, Monitor } from "lucide-react";
+import { useState, forwardRef, type FormEvent } from "react";
+import {
+  Shield,
+  Sparkles,
+  Wrench,
+  MoreHorizontal,
+  CheckCircle2,
+  Monitor,
+} from "lucide-react";
+import type { CheckedState } from "@radix-ui/react-checkbox";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -43,42 +52,80 @@ export const FormSection = forwardRef<HTMLElement>((props, ref) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleServiceChange = (service: keyof FormData["services"], checked: boolean) => {
-    setFormData((prev) => ({
-      ...prev,
-      services: { ...prev.services, [service]: checked },
-    }));
-  };
+  // ✅ Blindagem: Radix pode mandar boolean | "indeterminate"
+  const checkedToBool = (v: CheckedState) => v === true;
 
-  const handleInputChange = (field: keyof Omit<FormData, "services">, value: string) => {
+  // ✅ Padronizado: sempre converte para boolean antes de salvar no state
+  type CheckedLike = boolean | "indeterminate" | undefined | null;
+
+  const toBool = (v: CheckedLike) => v === true;
+
+  const handleServiceChange =
+    (service: keyof FormData["services"]) => (checked: CheckedLike) => {
+      setFormData((prev) => ({
+        ...prev,
+        services: { ...prev.services, [service]: toBool(checked) },
+      }));
+    };
+
+  const handleInputChange = (
+    field: keyof Omit<FormData, "services">,
+    value: string
+  ) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
   const formatPhone = (value: string) => {
     const numbers = value.replace(/\D/g, "");
     if (numbers.length <= 2) return numbers;
-    if (numbers.length <= 7) return `(${numbers.slice(0, 2)}) ${numbers.slice(2)}`;
-    if (numbers.length <= 11) return `(${numbers.slice(0, 2)}) ${numbers.slice(2, 7)}-${numbers.slice(7)}`;
-    return `(${numbers.slice(0, 2)}) ${numbers.slice(2, 7)}-${numbers.slice(7, 11)}`;
+    if (numbers.length <= 7)
+      return `(${numbers.slice(0, 2)}) ${numbers.slice(2)}`;
+    if (numbers.length <= 11)
+      return `(${numbers.slice(0, 2)}) ${numbers.slice(2, 7)}-${numbers.slice(
+        7
+      )}`;
+    return `(${numbers.slice(0, 2)}) ${numbers.slice(2, 7)}-${numbers.slice(
+      7,
+      11
+    )}`;
   };
 
   const formatDocument = (value: string) => {
     const numbers = value.replace(/\D/g, "");
+    // CPF
     if (numbers.length <= 11) {
       if (numbers.length <= 3) return numbers;
-      if (numbers.length <= 6) return `${numbers.slice(0, 3)}.${numbers.slice(3)}`;
-      if (numbers.length <= 9) return `${numbers.slice(0, 3)}.${numbers.slice(3, 6)}.${numbers.slice(6)}`;
-      return `${numbers.slice(0, 3)}.${numbers.slice(3, 6)}.${numbers.slice(6, 9)}-${numbers.slice(9)}`;
+      if (numbers.length <= 6)
+        return `${numbers.slice(0, 3)}.${numbers.slice(3)}`;
+      if (numbers.length <= 9)
+        return `${numbers.slice(0, 3)}.${numbers.slice(3, 6)}.${numbers.slice(
+          6
+        )}`;
+      return `${numbers.slice(0, 3)}.${numbers.slice(3, 6)}.${numbers.slice(
+        6,
+        9
+      )}-${numbers.slice(9)}`;
     }
     // CNPJ
     if (numbers.length <= 2) return numbers;
-    if (numbers.length <= 5) return `${numbers.slice(0, 2)}.${numbers.slice(2)}`;
-    if (numbers.length <= 8) return `${numbers.slice(0, 2)}.${numbers.slice(2, 5)}.${numbers.slice(5)}`;
-    if (numbers.length <= 12) return `${numbers.slice(0, 2)}.${numbers.slice(2, 5)}.${numbers.slice(5, 8)}/${numbers.slice(8)}`;
-    return `${numbers.slice(0, 2)}.${numbers.slice(2, 5)}.${numbers.slice(5, 8)}/${numbers.slice(8, 12)}-${numbers.slice(12, 14)}`;
+    if (numbers.length <= 5)
+      return `${numbers.slice(0, 2)}.${numbers.slice(2)}`;
+    if (numbers.length <= 8)
+      return `${numbers.slice(0, 2)}.${numbers.slice(2, 5)}.${numbers.slice(
+        5
+      )}`;
+    if (numbers.length <= 12)
+      return `${numbers.slice(0, 2)}.${numbers.slice(2, 5)}.${numbers.slice(
+        5,
+        8
+      )}/${numbers.slice(8)}`;
+    return `${numbers.slice(0, 2)}.${numbers.slice(2, 5)}.${numbers.slice(
+      5,
+      8
+    )}/${numbers.slice(8, 12)}-${numbers.slice(12, 14)}`;
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
     const hasService = Object.values(formData.services).some((v) => v);
@@ -91,7 +138,12 @@ export const FormSection = forwardRef<HTMLElement>((props, ref) => {
       return;
     }
 
-    if (!formData.nome.trim() || !formData.email.trim() || !formData.celular.trim() || !formData.documento.trim()) {
+    if (
+      !formData.nome.trim() ||
+      !formData.email.trim() ||
+      !formData.celular.trim() ||
+      !formData.documento.trim()
+    ) {
       toast({
         title: "Campos obrigatórios",
         description: "Por favor, preencha todos os campos obrigatórios.",
@@ -135,7 +187,13 @@ export const FormSection = forwardRef<HTMLElement>((props, ref) => {
   const resetForm = () => {
     setIsSubmitted(false);
     setFormData({
-      services: { portaria: false, limpeza: false, auxiliar: false, tecnologia: false, outros: false },
+      services: {
+        portaria: false,
+        limpeza: false,
+        auxiliar: false,
+        tecnologia: false,
+        outros: false,
+      },
       nome: "",
       email: "",
       celular: "",
@@ -152,9 +210,12 @@ export const FormSection = forwardRef<HTMLElement>((props, ref) => {
             <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-accent/10 flex items-center justify-center">
               <CheckCircle2 className="w-10 h-10 text-accent" />
             </div>
-            <h2 className="text-2xl font-bold text-foreground mb-3">Solicitação Enviada!</h2>
+            <h2 className="text-2xl font-bold text-foreground mb-3">
+              Solicitação Enviada!
+            </h2>
             <p className="text-muted-foreground mb-6">
-              Recebemos seu pedido de orçamento. Nossa equipe entrará em contato em até 24 horas úteis.
+              Recebemos seu pedido de orçamento. Nossa equipe entrará em contato
+              em até 24 horas úteis.
             </p>
             <Button variant="hero" onClick={resetForm}>
               Fazer Nova Solicitação
@@ -172,17 +233,22 @@ export const FormSection = forwardRef<HTMLElement>((props, ref) => {
           <span className="inline-block px-4 py-1.5 rounded-full bg-accent/10 text-accent text-sm font-medium mb-4">
             Orçamento Gratuito
           </span>
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Solicite seu Orçamento</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+            Solicite seu Orçamento
+          </h2>
           <p className="text-muted-foreground text-lg">
-            Preencha o formulário e receba uma proposta personalizada.
+            Preencha o formulário e receba uma proposta sob medida para a sua demanda.
             <br />
             <span className="text-base">
-              Trabalhamos com tecnologia em geral e segurança residencial, incluindo CFTV e cercas elétricas.
+              Atuamos com terceirização de serviços e soluções em tecnologia e segurança eletrônica, incluindo CFTV e cercas elétricas.
             </span>
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="bg-background rounded-2xl shadow-card p-6 md:p-8 space-y-8">
+        <form
+          onSubmit={handleSubmit}
+          className="bg-background rounded-2xl shadow-card p-6 md:p-8 space-y-8"
+        >
           <fieldset className="space-y-4">
             <legend className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
               <span className="w-1.5 h-6 rounded-full bg-accent"></span>
@@ -194,37 +260,40 @@ export const FormSection = forwardRef<HTMLElement>((props, ref) => {
                 id="portaria"
                 label="Portaria e Controle de Acesso"
                 icon={Shield}
-                checked={formData.services.portaria}
-                onCheckedChange={(checked) => handleServiceChange("portaria", checked)}
-
+                checked={!!formData.services.portaria}
+                onCheckedChange={handleServiceChange("portaria")}
               />
+
               <ServiceCheckbox
                 id="limpeza"
                 label="Serviços de Limpeza"
                 icon={Sparkles}
-                checked={formData.services.limpeza}
-                onCheckedChange={(checked) => handleServiceChange("limpeza", !!checked)}
+                checked={!!formData.services.limpeza}
+                onCheckedChange={handleServiceChange("limpeza")}
               />
+
               <ServiceCheckbox
                 id="auxiliar"
                 label="Auxiliar de Serviços Gerais"
                 icon={Wrench}
-                checked={formData.services.auxiliar}
-                onCheckedChange={(checked) => handleServiceChange("auxiliar", !!checked)}
+                checked={!!formData.services.auxiliar}
+                onCheckedChange={handleServiceChange("auxiliar")}
               />
+
               <ServiceCheckbox
                 id="tecnologia"
                 label="Serviços de Tecnologia"
                 icon={Monitor}
-                checked={formData.services.tecnologia}
-                onCheckedChange={(checked) => handleServiceChange("tecnologia", !!checked)}
+                checked={!!formData.services.tecnologia}
+                onCheckedChange={handleServiceChange("tecnologia")}
               />
+
               <ServiceCheckbox
                 id="outros"
                 label="Outros (descreva abaixo)"
                 icon={MoreHorizontal}
-                checked={formData.services.outros}
-                onCheckedChange={(checked) => handleServiceChange("outros", !!checked)}
+                checked={!!formData.services.outros}
+                onCheckedChange={handleServiceChange("outros")}
               />
             </div>
           </fieldset>
@@ -264,7 +333,10 @@ export const FormSection = forwardRef<HTMLElement>((props, ref) => {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="celular" className="text-foreground font-medium">
+                <Label
+                  htmlFor="celular"
+                  className="text-foreground font-medium"
+                >
                   Celular <span className="text-destructive">*</span>
                 </Label>
                 <Input
@@ -272,24 +344,33 @@ export const FormSection = forwardRef<HTMLElement>((props, ref) => {
                   type="tel"
                   placeholder="(69) 9 0000-0000"
                   value={formData.celular}
-                  onChange={(e) => handleInputChange("celular", formatPhone(e.target.value))}
+                  onChange={(e) =>
+                    handleInputChange("celular", formatPhone(e.target.value))
+                  }
                   required
                 />
               </div>
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="documento" className="text-foreground font-medium">
+              <Label
+                htmlFor="documento"
+                className="text-foreground font-medium"
+              >
                 CPF ou CNPJ <span className="text-destructive">*</span>
               </Label>
               <Input
                 id="documento"
                 placeholder="000.000.000-00 / 00.000.000/0001-00"
                 value={formData.documento}
-                onChange={(e) => handleInputChange("documento", formatDocument(e.target.value))}
+                onChange={(e) =>
+                  handleInputChange("documento", formatDocument(e.target.value))
+                }
                 required
               />
-              <p className="text-sm text-muted-foreground">Usaremos seus dados apenas para responder ao seu pedido.</p>
+              <p className="text-sm text-muted-foreground">
+                Usaremos seus dados apenas para responder ao seu pedido.
+              </p>
             </div>
           </fieldset>
 
@@ -307,12 +388,23 @@ export const FormSection = forwardRef<HTMLElement>((props, ref) => {
 
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
             <p className="text-sm text-muted-foreground">
-              Campos marcados com <span className="text-destructive">*</span> são obrigatórios
+              Campos marcados com <span className="text-destructive">*</span>{" "}
+              são obrigatórios
             </p>
-
-            <Button type="submit" variant="hero" size="lg" disabled={isSubmitting}>
-              {isSubmitting ? "Enviando..." : "Enviar Solicitação"}
-            </Button>
+<Button
+  type="submit"
+  size="lg"
+  disabled={isSubmitting}
+  className="
+    !bg-[#0B2B4B] !text-white
+    hover:!bg-[#0A243F]
+    disabled:!bg-[#0B2B4B]/70 disabled:!text-white/90
+    disabled:!opacity-100
+    shadow-md hover:shadow-lg transition
+  "
+>
+  {isSubmitting ? "Enviando..." : "Enviar Solicitação"}
+</Button>
           </div>
         </form>
       </div>

@@ -43,7 +43,7 @@ export function BenefitsSection() {
             Por que nos escolher
           </span>
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-            Diferenciais que fazem a diferença
+            Nossos diferenciais
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
             Comprometidos com excelência em cada serviço prestado
