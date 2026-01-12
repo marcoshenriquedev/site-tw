@@ -34,10 +34,10 @@ export function TestimonialsSection() {
             Depoimentos
           </span>
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-            O que nossos clientes dizem
+            Depoimentos de Clientes
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            A satisfação dos nossos clientes é nossa maior conquista
+            A confiança dos nossos clientes reflete a qualidade e a consistência das nossas entregas.
           </p>
         </div>
         

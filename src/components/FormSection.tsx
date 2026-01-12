@@ -237,10 +237,13 @@ export const FormSection = forwardRef<HTMLElement>((props, ref) => {
             Solicite seu Orçamento
           </h2>
           <p className="text-muted-foreground text-lg">
-            Preencha o formulário e receba uma proposta sob medida para a sua demanda.
+            Preencha o formulário e receba uma proposta sob medida para a sua
+            demanda.
             <br />
             <span className="text-base">
-              Atuamos com terceirização de serviços e soluções em tecnologia e segurança eletrônica, incluindo CFTV e cercas elétricas.
+              Preencha o formulário e receba uma proposta personalizada com
+              rapidez e clareza. Serviços terceirizados e soluções em tecnologia
+              e segurança eletrônica (CFTV e cercas elétricas).
             </span>
           </p>
         </div>
@@ -391,20 +394,20 @@ export const FormSection = forwardRef<HTMLElement>((props, ref) => {
               Campos marcados com <span className="text-destructive">*</span>{" "}
               são obrigatórios
             </p>
-<Button
-  type="submit"
-  size="lg"
-  disabled={isSubmitting}
-  className="
+            <Button
+              type="submit"
+              size="lg"
+              disabled={isSubmitting}
+              className="
     !bg-[#0B2B4B] !text-white
     hover:!bg-[#0A243F]
     disabled:!bg-[#0B2B4B]/70 disabled:!text-white/90
     disabled:!opacity-100
     shadow-md hover:shadow-lg transition
   "
->
-  {isSubmitting ? "Enviando..." : "Enviar Solicitação"}
-</Button>
+            >
+              {isSubmitting ? "Enviando..." : "Enviar Solicitação"}
+            </Button>
           </div>
         </form>
       </div>
