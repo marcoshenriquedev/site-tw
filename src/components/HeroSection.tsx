@@ -41,7 +41,7 @@ export function HeroSection({ onScrollToForm }: HeroSectionProps) {
         </div>
 
         {/* Overlays */}
-        <div className="absolute inset-0 bg-black/75" />
+        <div className="absolute inset-0 bg-black/50" />
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/55 to-black/65" />
       </div>
 
@@ -85,42 +85,69 @@ export function HeroSection({ onScrollToForm }: HeroSectionProps) {
         </p>
 
         {/* Trust Indicators */}
+        {/* Trust Indicators */}
         <div
-          className="flex flex-wrap justify-center gap-6 md:gap-10 mb-10 animate-fade-in"
+          className="
+    grid gap-4
+    sm:flex sm:flex-wrap sm:justify-center sm:gap-6
+    md:gap-10
+    mb-10 animate-fade-in
+  "
           style={{ animationDelay: "0.3s" }}
         >
-          <div className="flex items-center gap-3 text-white/90">
+          {/* Item */}
+          <div
+            className="
+      flex items-center gap-3 text-white/90
+      w-full max-w-[340px] mx-auto justify-start
+      sm:w-auto sm:max-w-none sm:mx-0 sm:justify-center
+    "
+          >
             <div
-              className="w-11 h-11 rounded-full backdrop-blur-md border border-white/25 shadow-[0_10px_25px_rgba(0,0,0,0.25)] flex items-center justify-center"
+              className="w-11 h-11 rounded-full backdrop-blur-md border border-white/25 shadow-[0_10px_25px_rgba(0,0,0,0.25)] flex items-center justify-center shrink-0"
               style={{ backgroundColor: `${TW_BLUE}CC` }}
             >
               <Shield className="w-6 h-6 text-white" />
             </div>
-            <span className="text-sm font-semibold tracking-wide">
+            <span className="text-sm font-semibold tracking-wide text-left">
               Conformidade Legal
             </span>
           </div>
 
-          <div className="flex items-center gap-3 text-white/90">
+          {/* Item */}
+          <div
+            className="
+      flex items-center gap-3 text-white/90
+      w-full max-w-[340px] mx-auto justify-start
+      sm:w-auto sm:max-w-none sm:mx-0 sm:justify-center
+    "
+          >
             <div
-              className="w-11 h-11 rounded-full backdrop-blur-md border border-white/25 shadow-[0_10px_25px_rgba(0,0,0,0.25)] flex items-center justify-center"
+              className="w-11 h-11 rounded-full backdrop-blur-md border border-white/25 shadow-[0_10px_25px_rgba(0,0,0,0.25)] flex items-center justify-center shrink-0"
               style={{ backgroundColor: `${TW_BLUE}CC` }}
             >
               <Award className="w-6 h-6 text-white" />
             </div>
-            <span className="text-sm font-semibold tracking-wide">
+            <span className="text-sm font-semibold tracking-wide text-left">
               Equipe Qualificada
             </span>
           </div>
 
-          <div className="flex items-center gap-3 text-white/90">
+          {/* Item */}
+          <div
+            className="
+      flex items-center gap-3 text-white/90
+      w-full max-w-[340px] mx-auto justify-start
+      sm:w-auto sm:max-w-none sm:mx-0 sm:justify-center
+    "
+          >
             <div
-              className="w-11 h-11 rounded-full backdrop-blur-md border border-white/25 shadow-[0_10px_25px_rgba(0,0,0,0.25)] flex items-center justify-center"
+              className="w-11 h-11 rounded-full backdrop-blur-md border border-white/25 shadow-[0_10px_25px_rgba(0,0,0,0.25)] flex items-center justify-center shrink-0"
               style={{ backgroundColor: `${TW_BLUE}CC` }}
             >
               <Clock className="w-6 h-6 text-white" />
             </div>
-            <span className="text-sm font-semibold tracking-wide">
+            <span className="text-sm font-semibold tracking-wide text-left">
               Atendimento 24h
             </span>
           </div>
