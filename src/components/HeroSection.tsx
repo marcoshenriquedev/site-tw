@@ -41,7 +41,7 @@ export function HeroSection({ onScrollToForm }: HeroSectionProps) {
         </div>
 
         {/* Overlays */}
-        <div className="absolute inset-0 bg-black/50" />
+        <div className="absolute inset-0 bg-black/35" />
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/55 to-black/65" />
       </div>
 
@@ -69,7 +69,7 @@ export function HeroSection({ onScrollToForm }: HeroSectionProps) {
           style={{ animationDelay: "0.1s" }}
         >
           Soluções Profissionais em
-          <span className="block mt-2 drop-shadow" style={{ color: TW_BLUE }}>
+          <span className="block mt-2 drop-shadow" style={{ color: "#16498A" }}>
             Terceirização de Serviços
           </span>
         </h1>
