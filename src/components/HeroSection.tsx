@@ -42,7 +42,7 @@ export function HeroSection({ onScrollToForm }: HeroSectionProps) {
           />
         </div>
 
-        {/* Overlays (não alteram layout/texto) */}
+        {/* Overlays */}
         <div className="absolute inset-0 bg-black/75" />
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/55 to-black/65" />
       </div>
@@ -54,7 +54,7 @@ export function HeroSection({ onScrollToForm }: HeroSectionProps) {
         style={{ animationDelay: "1s" }}
       />
 
-      {/* Conteúdo (inalterado em fonte/cor/tamanho) */}
+      {/* Conteúdo */}
       <div className="relative z-10 container mx-auto px-4 text-center">
         {/* Logo */}
         <div className="animate-fade-in mb-8">
@@ -128,19 +128,23 @@ export function HeroSection({ onScrollToForm }: HeroSectionProps) {
           </div>
         </div>
 
-        {/* CTA Button */}
+        {/* CTA Button (corrigido para não “sair” da section no mobile) */}
         <div className="animate-fade-in" style={{ animationDelay: "0.4s" }}>
           <Button
             variant="hero"
             size="lg"
             onClick={onScrollToForm}
             className="
-              text-lg px-8 py-6
+              w-full sm:w-auto
+              max-w-[320px] sm:max-w-none
+              mx-auto
+              text-lg px-6 sm:px-8 py-6
               !text-white
               border border-white/20
               shadow-[0_12px_30px_rgba(15,55,111,0.35)]
               hover:shadow-[0_16px_40px_rgba(15,55,111,0.45)]
               transition-all duration-300 hover:-translate-y-1
+              whitespace-normal break-words
             "
             style={{ backgroundColor: TW_BLUE }}
             onMouseEnter={(e) => {
