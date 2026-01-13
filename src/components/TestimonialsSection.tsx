@@ -37,8 +37,8 @@ export function TestimonialsSection() {
         {/* Section Header */}
         <div className="text-center mb-16">
           <span
-            className="inline-block px-4 py-1.5 rounded-full text-sm font-medium mb-4"
-            style={{ backgroundColor: `${TW_BLUE}14`, color: TW_BLUE }}
+            className="inline-block px-4 py-1.5 rounded-full text-sm font-medium mb-4 bg-[#EAF2FF] text-[#2F6FED] border border-[#CFE0FF]"
+            
           >
             Depoimentos
           </span>

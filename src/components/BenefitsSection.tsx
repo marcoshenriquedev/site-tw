@@ -39,7 +39,7 @@ export function BenefitsSection() {
       <div className="container mx-auto max-w-6xl">
         {/* Section Header */}
         <div className="text-center mb-16">
-          <span className="inline-block px-4 py-1.5 rounded-full bg-accent/10 text-accent text-sm font-medium mb-4">
+          <span className="inline-block px-4 py-1.5 rounded-full text-sm font-medium mb-4 bg-[#EAF2FF] text-[#2F6FED] border border-[#CFE0FF]">
             Por que nos escolher
           </span>
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">

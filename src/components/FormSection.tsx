@@ -248,12 +248,9 @@ export const FormSection = forwardRef<HTMLElement>((props, ref) => {
     <section ref={ref} id="form-section" className="py-20 px-4 bg-card">
       <div className="container mx-auto max-w-2xl">
         <div className="text-center mb-10">
-          <span
-            className="inline-block px-4 py-1.5 rounded-full text-sm font-medium mb-4"
-            style={{ backgroundColor: `${TW_BLUE}14`, color: TW_BLUE }}
-          >
-            Orçamento Gratuito
-          </span>
+          <span className="inline-block px-4 py-1.5 rounded-full text-sm font-medium mb-4 bg-[#EAF2FF] text-[#2F6FED] border border-[#CFE0FF]">
+  Orçamento Gratuito
+</span>
 
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
             Solicite seu Orçamento

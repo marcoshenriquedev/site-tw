@@ -8,36 +8,53 @@ interface HeroSectionProps {
 }
 
 export function HeroSection({ onScrollToForm }: HeroSectionProps) {
-  // Azul do escudo/logo
   const TW_BLUE = "#0F376F";
   const TW_BLUE_HOVER = "#0B2B4B";
 
+  const BG_URL = `/limpeza e segurança.png`;
+
   return (
-    <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
-      {/* Theme Toggle (canto superior direito, reservado) */}
+    <section className="relative isolate min-h-[90vh] flex items-center justify-center overflow-hidden">
+      {/* Theme Toggle */}
       <div className="absolute top-4 right-4 z-20">
         <ThemeToggle />
       </div>
 
-      {/* Background Image (public/... => /...) */}
-      <div
-        className="absolute inset-0 bg-center bg-cover bg-no-repeat"
-        style={{ backgroundImage: `url("/limpeza e segurança.png")` }}
-      />
+      {/* Background system (mobile: imagem inteira; desktop: mantém cover original) */}
+      <div className="absolute inset-0 -z-10 pointer-events-none">
+        {/* DESKTOP / NOTEBOOK (mantém seu design base) */}
+        <div
+          className="hidden md:block absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: `url("${BG_URL}")` }}
+        />
 
-      {/* Overlay for readability */}
-      <div className="absolute inset-0 bg-black/65" />
+        {/* MOBILE/TABLET (imagem inteira SEM distorção) */}
+        <div className="md:hidden absolute inset-0">
+          {/* Camada de preenchimento (cover) só para não sobrar “vazio” feio */}
+          <div
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat blur-xl scale-110 opacity-60"
+            style={{ backgroundImage: `url("${BG_URL}")` }}
+          />
+          {/* Camada principal (imagem inteira) */}
+          <div
+            className="absolute inset-0 bg-contain bg-center bg-no-repeat"
+            style={{ backgroundImage: `url("${BG_URL}")` }}
+          />
+        </div>
 
-      {/* Optional: subtle gradient to improve contrast */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/55 to-black/65" />
+        {/* Overlays (não alteram layout/texto) */}
+        <div className="absolute inset-0 bg-black/75" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/55 to-black/65" />
+      </div>
 
       {/* Floating Elements */}
-      <div className="absolute top-20 left-10 w-20 h-20 rounded-full bg-white/14 blur-2xl animate-pulse" />
+      <div className="absolute top-20 left-10 z-0 w-20 h-20 rounded-full bg-white/14 blur-2xl animate-pulse" />
       <div
-        className="absolute bottom-32 right-16 w-32 h-32 rounded-full bg-white/10 blur-3xl animate-pulse"
+        className="absolute bottom-32 right-16 z-0 w-32 h-32 rounded-full bg-white/10 blur-3xl animate-pulse"
         style={{ animationDelay: "1s" }}
       />
 
+      {/* Conteúdo (inalterado em fonte/cor/tamanho) */}
       <div className="relative z-10 container mx-auto px-4 text-center">
         {/* Logo */}
         <div className="animate-fade-in mb-8">

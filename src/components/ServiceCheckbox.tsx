@@ -52,7 +52,7 @@ export function ServiceCheckbox({
         }
       }}
     >
-      {/* ✅ Ícone não precisa de handler; clique cai no container */}
+      {/* Ícone: clique cai no container (seleciona) */}
       <div
         className={cn(
           "flex items-center justify-center w-10 h-10 rounded-lg transition-all duration-200",
@@ -65,23 +65,20 @@ export function ServiceCheckbox({
       </div>
 
       <div className="flex-1">
-        <Label
-          className="text-base font-medium cursor-pointer text-foreground block"
-          onClick={(e) => e.stopPropagation()} // ✅ não duplica evento
-        >
+        {/* ✅ REMOVIDO stopPropagation: clicar no texto também seleciona */}
+        <Label className="text-base font-medium cursor-pointer text-foreground block">
           {label}
         </Label>
 
         {description && (
-          <p
-            className="text-sm text-muted-foreground mt-0.5"
-            onClick={(e) => e.stopPropagation()}
-          >
+          // ✅ REMOVIDO stopPropagation: clicar na descrição também seleciona
+          <p className="text-sm text-muted-foreground mt-0.5">
             {description}
           </p>
         )}
       </div>
 
+      {/* Checkbox: mantém funcionando e não duplica */}
       <Checkbox
         ref={checkboxRef}
         id={id}
