@@ -22,20 +22,18 @@ export function HeroSection({ onScrollToForm }: HeroSectionProps) {
 
       {/* Background system (mobile: imagem inteira; desktop: mantém cover original) */}
       <div className="absolute inset-0 -z-10 pointer-events-none">
-        {/* DESKTOP / NOTEBOOK (mantém seu design base) */}
+        {/* DESKTOP / NOTEBOOK */}
         <div
           className="hidden md:block absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: `url("${BG_URL}")` }}
         />
 
-        {/* MOBILE/TABLET (imagem inteira SEM distorção) */}
+        {/* MOBILE/TABLET */}
         <div className="md:hidden absolute inset-0">
-          {/* Camada de preenchimento (cover) só para não sobrar “vazio” feio */}
           <div
             className="absolute inset-0 bg-cover bg-center bg-no-repeat blur-xl scale-110 opacity-60"
             style={{ backgroundImage: `url("${BG_URL}")` }}
           />
-          {/* Camada principal (imagem inteira) */}
           <div
             className="absolute inset-0 bg-contain bg-center bg-no-repeat"
             style={{ backgroundImage: `url("${BG_URL}")` }}
@@ -55,7 +53,7 @@ export function HeroSection({ onScrollToForm }: HeroSectionProps) {
       />
 
       {/* Conteúdo */}
-      <div className="relative z-10 container mx-auto px-4 text-center">
+      <div className="relative z-10 container mx-auto px-4 text-center pb-20 md:pb-0">
         {/* Logo */}
         <div className="animate-fade-in mb-8">
           <img
@@ -128,23 +126,22 @@ export function HeroSection({ onScrollToForm }: HeroSectionProps) {
           </div>
         </div>
 
-        {/* CTA Button (corrigido para não “sair” da section no mobile) */}
-        <div className="animate-fade-in" style={{ animationDelay: "0.4s" }}>
+        {/* CTA Button (sobe no mobile sem mexer na largura) */}
+        <div
+          className="animate-fade-in -mt-4 sm:mt-0"
+          style={{ animationDelay: "0.4s" }}
+        >
           <Button
             variant="hero"
             size="lg"
             onClick={onScrollToForm}
             className="
-              w-full sm:w-auto
-              max-w-[320px] sm:max-w-none
-              mx-auto
-              text-lg px-6 sm:px-8 py-6
+              text-lg px-8 py-6
               !text-white
               border border-white/20
               shadow-[0_12px_30px_rgba(15,55,111,0.35)]
               hover:shadow-[0_16px_40px_rgba(15,55,111,0.45)]
               transition-all duration-300 hover:-translate-y-1
-              whitespace-normal break-words
             "
             style={{ backgroundColor: TW_BLUE }}
             onMouseEnter={(e) => {
@@ -159,11 +156,11 @@ export function HeroSection({ onScrollToForm }: HeroSectionProps) {
             Solicitar Orçamento Gratuito
           </Button>
         </div>
+      </div>
 
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-          <ArrowDown className="w-6 h-6 text-white/70" />
-        </div>
+      {/* Scroll Indicator (fica no rodapé sem empurrar conteúdo) */}
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 animate-bounce z-10">
+        <ArrowDown className="w-6 h-6 text-white/70" />
       </div>
     </section>
   );
