@@ -27,12 +27,48 @@ export const ServicesSection = () => {
           {services.map((service, index) => (
             <div
               key={index}
-              className="bg-card border border-border rounded-2xl p-6 md:p-8 flex flex-col items-center justify-center text-center hover:shadow-lg hover:border-primary/20 transition-all duration-300 group"
+              className="
+                relative overflow-hidden
+                bg-card border border-border rounded-2xl
+                p-6 md:p-8
+                flex flex-col items-center justify-center text-center
+                transition-all duration-300
+                hover:shadow-lg hover:-translate-y-1
+                group
+              "
             >
+              {/* ✅ “Animação azul” no hover (visível no claro e no escuro) */}
               <div
-                className="w-14 h-14 md:w-16 md:h-16 rounded-xl flex items-center justify-center mb-4 transition-colors"
+                className="
+                  pointer-events-none
+                  absolute inset-0
+                  opacity-0 group-hover:opacity-100
+                  transition-opacity duration-300
+                "
                 style={{
-                  backgroundColor: `${TW_BLUE}14`, // azul bem suave no fundo (≈8% opacidade)
+                  background:
+                    `radial-gradient(650px circle at 50% 40%, ${TW_BLUE}33 0%, transparent 55%)`,
+                }}
+              />
+
+              {/* ✅ Borda azul animada no hover */}
+              <div
+                className="
+                  pointer-events-none
+                  absolute inset-0 rounded-2xl
+                  opacity-0 group-hover:opacity-100
+                  transition-opacity duration-300
+                "
+                style={{
+                  boxShadow: `inset 0 0 0 1px ${TW_BLUE}66, 0 12px 28px ${TW_BLUE}22`,
+                }}
+              />
+
+              {/* Conteúdo */}
+              <div
+                className="relative w-14 h-14 md:w-16 md:h-16 rounded-xl flex items-center justify-center mb-4 transition-colors"
+                style={{
+                  backgroundColor: `${TW_BLUE}14`,
                 }}
               >
                 <service.icon
@@ -41,7 +77,7 @@ export const ServicesSection = () => {
                 />
               </div>
 
-              <h3 className="text-sm md:text-base font-semibold text-foreground">
+              <h3 className="relative text-sm md:text-base font-semibold text-foreground">
                 {service.title}
               </h3>
             </div>
