@@ -7,6 +7,8 @@ import { FormSection } from "@/components/FormSection";
 import { Footer } from "@/components/Footer";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { Toaster } from "@/components/ui/toaster";
+import { ClientSection } from "@/components/Client-Section";
+
 
 const Index = () => {
   const formRef = useRef<HTMLElement>(null);
@@ -22,6 +24,7 @@ const Index = () => {
       <ServicesSection />
       <FormSection ref={formRef} />
       <TestimonialsSection />
+      <ClientSection />
       <Footer />
       <WhatsAppButton />
       <Toaster />
