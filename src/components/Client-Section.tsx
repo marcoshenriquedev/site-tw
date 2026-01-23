@@ -7,11 +7,12 @@ type Client = {
 };
 
 const clients: Client[] = [
-  { name: "TW Soluções", logoSrc: "../public/fox.png" },
-  { name: "Saga", logoSrc: "../public/rev.png" },
-  { name: "FTR", logoSrc: "../public/cast.png" },
-  { name: "Claro", logoSrc: "../public/hsm.jpg" },
+  { name: "TW Soluções", logoSrc: "/clientes/fox.png" },
+  { name: "Saga",       logoSrc: "/clientes/rep.png" },
+  { name: "FTR",        logoSrc: "/clientes/cast.png" },
+  { name: "Claro",      logoSrc: "/clientes/nsm.jpg" },
 ];
+
 
 export function ClientSection() {
   const TW_BLUE = "#0F376F";
