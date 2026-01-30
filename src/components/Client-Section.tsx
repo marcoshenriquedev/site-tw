@@ -13,6 +13,7 @@ const clients: Client[] = [
   { name: "hsm", logoSrc: "/clientes/nsm.jpg" },
   { name: "peu", logoSrc: "/clientes/peu.png" },
   { name: "citro", logoSrc: "/clientes/citro.png" },
+  { name: "bella ", logoSrc: "/clientes/bella.png" },
 ];
 
 export function ClientSection() {
