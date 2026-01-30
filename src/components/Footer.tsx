@@ -1,5 +1,6 @@
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
-import logoTw from "@/assets/logo-tw.jpg";
+import brasaoTw from "@/assets/brasao-tw.png";
+
 
 export function Footer() {
   // Azul do escudo/logo (mesmo do HeroSection)
@@ -22,7 +23,7 @@ export function Footer() {
           {/* Company Info */}
           <div className="sm:col-span-2 lg:col-span-2 relative min-w-0">
             <img
-              src={logoTw}
+              src={brasaoTw}
               alt="TW Soluções"
               className="
                 absolute top-0 left-0

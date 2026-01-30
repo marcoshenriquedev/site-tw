@@ -7,31 +7,29 @@ type Client = {
 };
 
 const clients: Client[] = [
-  { name: "TW Soluções", logoSrc: "/clientes/fox.png" },
-  { name: "Saga",       logoSrc: "/clientes/rep.png" },
-  { name: "FTR",        logoSrc: "/clientes/cast.png" },
-  { name: "Claro",      logoSrc: "/clientes/nsm.jpg" },
+  { name: "fox", logoSrc: "/clientes/fox.png" },
+  { name: "rev", logoSrc: "/clientes/rep.png" },
+  { name: "cast", logoSrc: "/clientes/cast.png" },
+  { name: "hsm", logoSrc: "/clientes/nsm.jpg" },
+  { name: "peu", logoSrc: "/clientes/peu.png" },
+  { name: "citro", logoSrc: "/clientes/citro.png" },
 ];
-
 
 export function ClientSection() {
   const TW_BLUE = "#0F376F";
   const scrollerRef = useRef<HTMLDivElement | null>(null);
 
-  // ✅ Animação com duração controlada (mais rápida que o "smooth" do browser)
-  const animateScroll = (
-    element: HTMLElement,
-    delta: number,
-    duration = 150,
-  ) => {
+  // ✅ scroll animado (mais suave)
+  const animateScroll = (element: HTMLElement, delta: number, duration = 260) => {
     const start = element.scrollLeft;
     const startTime = performance.now();
 
-    const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
+    const easeInOutCubic = (t: number) =>
+      t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 
     const tick = (now: number) => {
       const t = Math.min(1, (now - startTime) / duration);
-      element.scrollLeft = start + delta * easeOutCubic(t);
+      element.scrollLeft = start + delta * easeInOutCubic(t);
       if (t < 1) requestAnimationFrame(tick);
     };
 
@@ -43,17 +41,20 @@ export function ClientSection() {
     if (!el) return;
 
     const card = el.querySelector<HTMLElement>("[data-client-card='true']");
-    const step = card ? card.offsetWidth + 16 : 320; // 16 = gap-4
+    if (!card) return;
+
+    const gap = 16; // gap-4
+    const step = card.getBoundingClientRect().width + gap;
     const delta = dir === "left" ? -step : step;
 
-    animateScroll(el, delta, 180); // 🔥 diminua p/ 150, aumente p/ 220
+    animateScroll(el, delta, 280);
   };
 
   return (
-    <section className="py-20 px-4 bg-background">
+    <section className="py-16 md:py-20 px-4 bg-background">
       <div className="container mx-auto max-w-6xl">
         {/* Header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-12 md:mb-16">
           <span className="inline-block px-4 py-1.5 rounded-full text-sm font-medium mb-4 bg-[#EAF2FF] text-[#2F6FED] border border-[#CFE0FF]">
             Parceiros
           </span>
@@ -69,15 +70,15 @@ export function ClientSection() {
 
         {/* Carousel */}
         <div className="relative">
-          {/* Left button */}
+          {/* Left button (agora aparece no mobile também) */}
           <button
             type="button"
             aria-label="Voltar"
             onClick={() => scrollByCards("left")}
             className="
-              hidden md:flex
-              absolute left-0 top-1/2 -translate-y-1/2 z-10
-              h-11 w-11 items-center justify-center rounded-full
+              flex
+              absolute left-2 md:left-0 top-1/2 -translate-y-1/2 z-10
+              h-10 w-10 md:h-11 md:w-11 items-center justify-center rounded-full
               bg-background/80 backdrop-blur border border-border
               shadow-md hover:shadow-lg transition
             "
@@ -91,9 +92,9 @@ export function ClientSection() {
             aria-label="Avançar"
             onClick={() => scrollByCards("right")}
             className="
-              hidden md:flex
-              absolute right-0 top-1/2 -translate-y-1/2 z-10
-              h-11 w-11 items-center justify-center rounded-full
+              flex
+              absolute right-2 md:right-0 top-1/2 -translate-y-1/2 z-10
+              h-10 w-10 md:h-11 md:w-11 items-center justify-center rounded-full
               bg-background/80 backdrop-blur border border-border
               shadow-md hover:shadow-lg transition
             "
@@ -101,22 +102,24 @@ export function ClientSection() {
             <ChevronRight className="h-5 w-5 text-foreground" />
           </button>
 
-          {/* Fade edges */}
-          <div className="pointer-events-none absolute right-0 top-0 h-full w-24 bg-gradient-to-l from-background to-transparent" />
-          <div className="pointer-events-none absolute left-0 top-0 h-full w-24 bg-gradient-to-r from-background to-transparent" />
+          {/* Fade edges (mais estreito no mobile) */}
+          <div className="pointer-events-none absolute right-0 top-0 h-full w-12 md:w-24 bg-gradient-to-l from-background to-transparent" />
+          <div className="pointer-events-none absolute left-0 top-0 h-full w-12 md:w-24 bg-gradient-to-r from-background to-transparent" />
 
           {/* Track */}
           <div
             ref={scrollerRef}
             className="
               flex gap-4 overflow-x-auto
-              pb-2 pt-1
-              snap-x snap-mandatory
+              px-12 md:px-14
+              pb-3 pt-1
+              snap-x snap-proximity
+              scroll-smooth
               [-ms-overflow-style:none] [scrollbar-width:none]
+              touch-pan-x
             "
             style={{ WebkitOverflowScrolling: "touch" }}
           >
-            {/* hide scrollbar (webkit) */}
             <style>{`
               div::-webkit-scrollbar { display: none; }
             `}</style>
@@ -126,13 +129,14 @@ export function ClientSection() {
                 key={c.name}
                 data-client-card="true"
                 className="
-                  snap-start
-                  min-w-[260px] sm:min-w-[300px] md:min-w-[320px]
+                  snap-center
+                  min-w-[220px] sm:min-w-[260px] md:min-w-[320px]
                   bg-card border border-border rounded-2xl
-                  p-6 md:p-8 flex items-center justify-center
+                  p-5 md:p-8 flex items-center justify-center
                   transition-all duration-300
                   hover:shadow-lg hover:-translate-y-1
                   relative overflow-hidden
+                  group
                 "
               >
                 {/* Hover azul */}
@@ -148,18 +152,15 @@ export function ClientSection() {
                   <img
                     src={c.logoSrc}
                     alt={c.name}
-                    className="relative w-full h-25 md:h-25 object-contain"
+                    className="relative w-full h-16 md:h-20 object-contain"
                     loading="lazy"
+                    draggable={false}
                     onError={(e) => {
-                      (e.currentTarget as HTMLImageElement).style.display =
-                        "none";
+                      (e.currentTarget as HTMLImageElement).style.display = "none";
                     }}
                   />
                 ) : (
-                  <span
-                    className="relative text-lg font-semibold"
-                    style={{ color: TW_BLUE }}
-                  >
+                  <span className="relative text-lg font-semibold" style={{ color: TW_BLUE }}>
                     {c.name}
                   </span>
                 )}

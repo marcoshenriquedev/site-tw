@@ -1,7 +1,7 @@
 import { ArrowDown, Shield, Award, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import logoTw from "@/assets/logo-tw.jpg";
+import brasaoTw from "@/assets/brasao-tw.png";
 
 interface HeroSectionProps {
   onScrollToForm: () => void;
@@ -55,11 +55,15 @@ export function HeroSection({ onScrollToForm }: HeroSectionProps) {
       {/* Conteúdo */}
       <div className="relative z-10 container mx-auto px-4 text-center pb-20 md:pb-0">
         {/* Logo */}
-        <div className="animate-fade-in mb-8">
+        <div className="mx-auto inline-flex items-center justify-center">
           <img
-            src={logoTw}
+            src={brasaoTw}
             alt="TW Soluções"
-            className="w-28 h-28 md:w-36 md:h-36 mx-auto object-contain rounded-2xl shadow-xl bg-white/90 p-2"
+            className="w- h-50 md:w-50 md:h-40
+        object-contain
+        drop-shadow-[0_12px_30px_rgba(0,0,0,0.45)]"
+
+         loading="lazy"
           />
         </div>
 
