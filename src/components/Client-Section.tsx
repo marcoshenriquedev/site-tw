@@ -21,7 +21,11 @@ export function ClientSection() {
   const scrollerRef = useRef<HTMLDivElement | null>(null);
 
   // ✅ scroll animado (mais suave)
-  const animateScroll = (element: HTMLElement, delta: number, duration = 260) => {
+  const animateScroll = (
+    element: HTMLElement,
+    delta: number,
+    duration = 260,
+  ) => {
     const start = element.scrollLeft;
     const startTime = performance.now();
 
@@ -130,21 +134,27 @@ export function ClientSection() {
                 key={c.name}
                 data-client-card="true"
                 className="
-                  snap-center
-                  min-w-[220px] sm:min-w-[260px] md:min-w-[320px]
-                  bg-card border border-border rounded-2xl
-                  p-5 md:p-8 flex items-center justify-center
-                  transition-all duration-300
-                  hover:shadow-lg hover:-translate-y-1
-                  relative overflow-hidden
-                  group
-                "
+      snap-center
+      
+      min-w-[200px] sm:min-w-[240px] md:min-w-[280px]
+      h-32 md:h-40 
+      
+      
+      bg-white border border-border rounded-2xl
+      
+      flex items-center justify-center
+      transition-all duration-300
+      hover:shadow-lg hover:-translate-y-1
+      relative overflow-hidden
+      group
+      p-4 /* Um padding menor apenas para a logo não encostar na borda do card */
+    "
               >
-                {/* Hover azul */}
+                {/* Hover sutil - Ajustado para aparecer melhor no fundo branco */}
                 <div
-                  className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"
                   style={{
-                    background: `radial-gradient(650px circle at 50% 40%, ${TW_BLUE}22 0%, transparent 55%)`,
+                    background: `radial-gradient(circle at 50% 50%, ${TW_BLUE}10 0%, transparent 70%)`,
                   }}
                 />
 
@@ -153,15 +163,28 @@ export function ClientSection() {
                   <img
                     src={c.logoSrc}
                     alt={c.name}
-                    className="relative w-full h-16 md:h-20 object-contain"
+                    className="
+          relative 
+          w-full 
+          h-full 
+          /* object-contain: garante que a logo não distorça e não corte */
+          object-contain 
+          transition-transform 
+          duration-500 
+          group-hover:scale-110
+        "
                     loading="lazy"
                     draggable={false}
                     onError={(e) => {
-                      (e.currentTarget as HTMLImageElement).style.display = "none";
+                      (e.currentTarget as HTMLImageElement).style.display =
+                        "none";
                     }}
                   />
                 ) : (
-                  <span className="relative text-lg font-semibold" style={{ color: TW_BLUE }}>
+                  <span
+                    className="relative text-lg font-semibold"
+                    style={{ color: TW_BLUE }}
+                  >
                     {c.name}
                   </span>
                 )}
